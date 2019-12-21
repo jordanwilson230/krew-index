@@ -34,9 +34,8 @@ jobs:
 
     - name: kubectl prompt
       shell: bash -l {0}
-      env: 
-        PATH="$PATH:~/.krew/bin"
       run: |
         # Interactive input required. Just validate the help prompt.
+        PATH="$PATH:~/.krew/bin"
         x=$(kubectl krew search)
         echo "$x"
