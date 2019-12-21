@@ -24,7 +24,7 @@ jobs:
     - name: Install krew
       shell: bash -l {0}
       run: |
-    # install krew (temporarily hardcode version)
+        # install krew (temporarily hardcode version)
         (
           cd "$(mktemp -d)" &&
           curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/krew.{tar.gz,yaml}" &&
