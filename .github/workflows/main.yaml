@@ -7,9 +7,9 @@ jobs:
     steps:
     - name: Checkout kubectl-plugins repo
       uses: actions/checkout@v1
-      with:
-        repository: jordanwilson230/krew-index
-        ref: master
+    # with:
+        #repository: jordanwilson230/krew-index
+        #ref: master
 
     - name: Setup Minikube
       id: minikube
@@ -36,6 +36,7 @@ jobs:
       shell: bash -l {0}
       run: |
         # Interactive input required. Just validate the help prompt.
-        PATH="$PATH:~/.krew/bin"
+        echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
+        . ~/.bashrc
         x=$(kubectl krew search)
         echo "$x"
