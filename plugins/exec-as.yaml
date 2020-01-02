@@ -5,8 +5,8 @@ metadata:
 spec:
   platforms:
   - uri: https://github.com/jordanwilson230/kubectl-plugins/archive/v1.0.3-krew.zip
-    sha256: ewdsfsdf3ww4ewgfsd0bae378c0cf049526cc8d45d3389d78f7054bc5cfc5de24
-    #sha256: e0bae378c0cf049526cc8d45d3389d78f7054bc5cfc5de24bd41b184ce9e806c
+    #sha256: ewdsfsdf3ww4ewgfsd0bae378c0cf049526cc8d45d3389d78f7054bc5cfc5de24
+    sha256: e0bae378c0cf049526cc8d45d3389d78f7054bc5cfc5de24bd41b184ce9e806c
     bin: kubectl-exec-as
     files:
     - from: "**/kubectl-exec-as"
