@@ -1,0 +1,42 @@
+name: "CI"
+on: [pull_request, push]
+jobs:
+  kubectl-plugins-check:
+    name: Validate Plugins
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout kubectl-plugins repo
+      uses: actions/checkout@v1
+    # with:
+        #repository: jordanwilson230/krew-index
+        #ref: master
+
+    - name: Setup Minikube
+      id: minikube
+      uses: CodingNagger/minikube-setup-action@v1.0.2
+
+    - name: Start Minikube
+      run: eval ${{ steps.minikube.outputs.launcher }} && (printf "\n\u2705[PASS] Minikube Ready\n") || (printf "\n\u274c [FAIL] Error while starting Minikube.\n" && exit 1)
+
+    - name: Sanity Check
+      run: kubectl get pods -nkube-system && (printf "\n\u2705[PASS] Sanity Check (get pods)\n") || (printf "\n\u274c [FAIL] Unable to retrieve pod list.\n" && exit 1)
+
+    - name: Install krew
+      shell: bash -l {0}
+      run: |
+        # install krew (temporarily hardcode version)
+        (
+          cd "$(mktemp -d)" &&
+          curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/v0.3.3/krew.tar.gz" &&
+          tar zxvf krew.tar.gz &&
+          ./krew-linux_amd64 install --manifest=krew.yaml --archive=krew.tar.gz
+        )
+
+    - name: kubectl prompt
+      shell: bash -l {0}
+      run: |
+        # Interactive input required. Just validate the help prompt.
+        echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
+        . ~/.bashrc
+        x=$(kubectl krew search)
+        echo "$x"
