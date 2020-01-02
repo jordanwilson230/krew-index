@@ -41,6 +41,15 @@ jobs:
         export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
         echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
         . ~/.bashrc
-        kubectl krew install exec-as
+        env
+        x=$(env)
+        echo "$x"
+        for plugin in $(find ./plugins -name '*.yaml'); do
+          echo -e "\n### Installing $plugin ###"
+          kubectl krew install --manifest=${plugin}
+          [ $? -ne 0 ] && (printf "\n\u274c [FAIL] Error installing $plugin - exit code $?") && exit 1
+          (printf "\n\u2705[PASS] Validated ${plugin}\n")
+        done
+        
         #x=$(kubectl krew install exec-as)
         #echo "$x"
