@@ -7,9 +7,9 @@ jobs:
     steps:
     - name: Checkout kubectl-plugins repo
       uses: actions/checkout@v1
-    # with:
+      with:
         #repository: jordanwilson230/krew-index
-        #ref: master
+         ref: ${GITHUB_SHA}
 
     - name: Setup Minikube
       id: minikube
@@ -41,14 +41,13 @@ jobs:
         export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
         echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
         . ~/.bashrc
-        env
-        x=$(env)
-        echo "$x"
+        count=1
+        plugin_count=$(ls -1 ./plugins | wc -l)
         for plugin in $(find ./plugins -name '*.yaml'); do
-          echo -e "\n### Installing $plugin ###"
+          echo -e "\n#[${count}/${plugin_count}] Installing $plugin ###"
           kubectl krew install --manifest=${plugin}
           [ $? -ne 0 ] && (printf "\n\u274c [FAIL] Error installing $plugin - exit code $?") && exit 1
-          (printf "\n\u2705[PASS] Validated ${plugin}\n")
+          (printf "\n\u2705[PASS] ${plugin}\n") && let count=count+1
         done
         
         #x=$(kubectl krew install exec-as)
