@@ -44,7 +44,7 @@ jobs:
         echo "github sha is $GITHUB_SHA"
         count=1
         plugin_count=$(ls -1 ./plugins | wc -l)
-        for plugin in $(find ./plugins -name '*.yaml'); do
+        for plugin in $(find ./plugins -name '*.yaml' | sort); do
           echo -e "\n#[${count}/${plugin_count}] Installing $plugin ###"
           kubectl krew install --manifest=${plugin}
           [ $? -ne 0 ] && (printf "\n\u274c [FAIL] Error installing $plugin - exit code $?") && exit 1
