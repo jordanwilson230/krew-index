@@ -8,8 +8,8 @@ jobs:
     - name: Checkout kubectl-plugins repo
       uses: actions/checkout@v1
       with:
-        #repository: jordanwilson230/krew-index
-         ref: ${GITHUB_SHA}
+         #repository: jordanwilson230/krew-index
+         ref: ${{ GITHUB_SHA }}
 
     - name: Setup Minikube
       id: minikube
