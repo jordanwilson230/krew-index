@@ -7,9 +7,9 @@ jobs:
     steps:
     - name: Checkout kubectl-plugins repo
       uses: actions/checkout@v1
-    # with:
-        #repository: jordanwilson230/krew-index
-        #ref: master
+      # with:
+         #repository: jordanwilson230/krew-index
+         #ref: ${{ GITHUB_SHA }}
 
     - name: Setup Minikube
       id: minikube
@@ -26,17 +26,30 @@ jobs:
       run: |
         # install krew (temporarily hardcode version)
         (
-          cd "$(mktemp -d)" &&
-          curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/v0.3.3/krew.tar.gz" &&
+          set -x; cd "$(mktemp -d)" &&
+          curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/v0.3.3/krew.{tar.gz,yaml}" &&
           tar zxvf krew.tar.gz &&
-          ./krew-linux_amd64 install --manifest=krew.yaml --archive=krew.tar.gz
+          KREW=./krew-"$(uname | tr '[:upper:]' '[:lower:]')_amd64" &&
+          "$KREW" install --manifest=krew.yaml --archive=krew.tar.gz &&
+          "$KREW" update
         )
 
     - name: kubectl prompt
       shell: bash -l {0}
       run: |
         # Interactive input required. Just validate the help prompt.
+        export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
         echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
         . ~/.bashrc
-        x=$(kubectl krew search)
-        echo "$x"
+        echo "github sha is $GITHUB_SHA"
+        count=1
+        plugin_count=$(ls -1 ./plugins | wc -l)
+        for plugin in $(find ./plugins -name '*.yaml' | cut -d '/' -f3 | sed 's|.yaml||g' | sort); do
+          echo -e "\n#[${count}/${plugin_count}] Installing $plugin ###"
+          kubectl krew install --manifest=./plugins/${plugin}.yaml
+          [ $? -ne 0 ] && (printf "\n\u274c [FAIL] Error installing $plugin - exit code $?") && exit 1
+          (printf "\n\u2705[PASS] ${plugin}\n") && let count=count+1
+        done
+        
+        #x=$(kubectl krew install exec-as)
+        #echo "$x"
