@@ -32,7 +32,7 @@ jobs:
           KREW=./krew-"$(uname | tr '[:upper:]' '[:lower:]')_amd64" &&
           "$KREW" install --manifest=krew.yaml --archive=krew.tar.gz &&
           "$KREW" update
-       )
+        )
 
     - name: kubectl prompt
       shell: bash -l {0}
