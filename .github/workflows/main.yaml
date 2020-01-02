@@ -45,10 +45,10 @@ jobs:
         count=1
         plugin_count=$(ls -1 ./plugins | wc -l)
         for plugin in $(find ./plugins -name '*.yaml' | cut -d '/' -f3 | sed 's|.yaml||g' | sort); do
-          echo -e "\n#[${count}/${plugin_count}] Installing $plugin ###"
+          echo -e "\n# [${count}/${plugin_count}] Installing $plugin ###"
           kubectl krew install --manifest=./plugins/${plugin}.yaml
           [ $? -ne 0 ] && (printf "\n\u274c [FAIL] Error installing $plugin - exit code $?") && exit 1
-          (printf "\n\u2705[PASS] ${plugin}\n") && let count=count+1
+          (printf "\n\u2705[OK] ${plugin}\n") && let count=count+1
         done
         
         #x=$(kubectl krew install exec-as)
