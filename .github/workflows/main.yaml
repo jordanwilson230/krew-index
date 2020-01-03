@@ -21,7 +21,7 @@ jobs:
     - name: Sanity Check
       run: kubectl get pods -nkube-system && (printf "\n\u2705[PASS] Sanity Check (get pods)\n") || (printf "\n\u274c [FAIL] Unable to retrieve pod list.\n" && exit 1)
 
-    - name: Install krew
+    - name: Install Krew
       shell: bash -l {0}
       run: |
         # install krew (use latest release)
@@ -34,7 +34,7 @@ jobs:
           "$KREW" update
         )
 
-    - name: Install Krew plugins
+    - name: Validate Plugin Installations
       shell: bash -l {0}
       run: |
         # Interactive input required. Just validate the help prompt.
