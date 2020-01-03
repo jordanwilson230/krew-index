@@ -2,7 +2,7 @@ name: "CI"
 on: [pull_request, push]
 jobs:
   krew-plugins-check:
-    name: Validate PR $GITHUB_SHA
+    name: Validate PR ${{ github.event.pull_request.head.sha }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout kubectl-plugins repo
