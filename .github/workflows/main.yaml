@@ -27,8 +27,7 @@ jobs:
         # install krew (use latest release)
         (
           set -x; cd "$(mktemp -d)" &&
-          krew_latest=$(curl -fsSLI -o /dev/null -w %{url_effective} https://github.com/kubernetes-sigs/krew/releases/latest | rev | cut -d '/' -f1 | rev)
-          curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/${krew_latest}/krew.{tar.gz,yaml}"
+          krew_latest=$(basename $(curl -fsSLI -o /dev/null -w %{url_effective} https://github.com/kubernetes-sigs/krew/releases/latest))         curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/${krew_latest}/krew.{tar.gz,yaml}"
           tar zxvf krew.tar.gz &&
           KREW=./krew-"$(uname | tr '[:upper:]' '[:lower:]')_amd64" &&
           "$KREW" install --manifest=krew.yaml --archive=krew.tar.gz &&
