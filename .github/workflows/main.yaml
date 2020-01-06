@@ -1,4 +1,4 @@
-name: "CI"
+name: "Regression"
 on: [push]
 jobs:
   krew-plugins-check:
