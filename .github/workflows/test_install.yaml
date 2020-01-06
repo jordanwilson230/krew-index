@@ -16,7 +16,7 @@ jobs:
         git remote add krew https://github.com/kubernetes-sigs/krew-index.git
         git fetch krew
         new_plugin=$(git diff --name-only krew/master -- . | grep 'yaml')
-        [ -z $new_plugin ] && echo -e "\n# No new plugins were found" && exit 0
+        [ -z $new_plugin ] && echo -e "\n# No new plugins were found" || echo -e "# Found new yaml file(s):\n${new_plugin}"
 
     - name: Setup Minikube
       id: minikube
