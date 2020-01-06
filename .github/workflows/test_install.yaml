@@ -45,11 +45,13 @@ jobs:
     - name: Validate Plugin Installation
       shell: bash -l {0}
       run: |
-        new_plugin=$(git diff master/origin --name-only | grep 'yaml')
+        new_plugin=$(git diff --name-only krew/master -- ./plugins | grep 'yaml')
         export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
-        echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
-        . ~/.bashrc
-        echo -e "\n# Installing $plugin #"
-        kubectl krew install --manifest=${new_plugin}
-        [ $? -ne 0 ] && (printf "\n\u274c [FAIL] Error installing $plugin - exit code $?") && exit 1
-        (printf "\n\u2705[OK] ${plugin} successfully installed\n-------------\n")
+        echo 'PATH=$PATH:~/.k
+        for plugin in $(echo ${new_pkugin} | cut -d '/' -f3 | sed 's|.yaml||g' | sort); do
+          . ~/.bashrc
+          echo -e "\n# Installing $plugin #"
+          kubectl krew install --manifest=${new_plugin}
+          [ $? -ne 0 ] && (printf "\n\u274c [FAIL] Error installing $plugin - exit code $?") && exit 1
+          (printf "\n\u2705[OK] ${plugin} successfully installed\n-------------\n")
+        done
