@@ -1,5 +1,11 @@
 name: "Test - Install Plugin"
-on: [pull_request, push]
+on:
+  push:
+    paths:
+    - './plugins'
+  pull_request:
+    paths:
+    - './plugins'
 jobs:
   krew-plugins-check:
     name: Validate PR ${{ github.event.pull_request.head.sha }}
@@ -7,9 +13,6 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v1
-      # with:
-         #repository: jordanwilson230/krew-index
-         #ref: ${{ GITHUB_SHA }}
          
     - name: Search for yaml updates
       run: |
