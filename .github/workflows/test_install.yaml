@@ -5,7 +5,7 @@ jobs:
     name: Validate PR ${{ github.event.pull_request.head.sha }}
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout kubectl-plugins repo
+    - name: Checkout repo
       uses: actions/checkout@v1
       # with:
          #repository: jordanwilson230/krew-index
