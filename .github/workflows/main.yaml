@@ -38,8 +38,6 @@ jobs:
     - name: Validate All Plugins
       shell: bash -l {0}
       run: |
-        # Interactive input required. Just validate the help prompt.
-        export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
         echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
         . ~/.bashrc
         count=1
