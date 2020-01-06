@@ -1,4 +1,4 @@
-name: "CI"
+name: "Test - Plugin Installs"
 on: [pull_request]
 jobs:
   krew-plugins-check:
