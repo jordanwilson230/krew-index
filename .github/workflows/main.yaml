@@ -1,5 +1,8 @@
 name: "Test - Regression"
-on: [push]
+on:
+  push:
+    paths:
+    - './plugins'
 jobs:
   krew-plugins-check:
     name: Validate PR ${{ github.event.pull_request.head.sha }}
