@@ -1,5 +1,5 @@
 name: "Test - Plugin Installs"
-on: [pull_request]
+on: [pull_request push]
 jobs:
   krew-plugins-check:
     name: Validate PR ${{ github.event.pull_request.head.sha }}
