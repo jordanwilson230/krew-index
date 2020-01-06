@@ -2,10 +2,10 @@ name: "Test - Install Plugin"
 on:
   #push:
     #paths:
-    #- './plugins'
+    #- 'plugins/**'
   pull_request:
     paths:
-    - './plugins'
+    - 'plugins/**'
 jobs:
   krew-plugins-check:
     name: Validate PR ${{ github.event.pull_request.head.sha }}
