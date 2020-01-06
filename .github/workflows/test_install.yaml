@@ -42,7 +42,7 @@ jobs:
         export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
         echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
         . ~/.bashrc
-        echo -e "-------------\n# Installing $plugin #"
+        echo -e "\n# Installing $plugin #"
         kubectl krew install --manifest=${new_plugin}
         [ $? -ne 0 ] && (printf "\n\u274c [FAIL] Error installing $plugin - exit code $?") && exit 1
-        (printf "\n\u2705[OK] ${plugin} successfully installed -------------\n")
+        (printf "\n\u2705[OK] ${plugin} successfully installed\n-------------\n")
