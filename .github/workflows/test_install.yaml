@@ -14,7 +14,7 @@ jobs:
     - name: Search for yaml updates
       run: |
         git remote add krew https://github.com/kubernetes-sigs/krew-index.git
-        git fetch krew/master
+        git fetch krew
         new_plugin=$(git diff --name-only krew/master -- . | grep 'yaml')
         [ -z $new_plugin ] && echo -e "\n# No new plugins were found" && exit 0
 
