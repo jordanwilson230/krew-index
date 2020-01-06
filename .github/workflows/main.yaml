@@ -1,5 +1,5 @@
 name: "CI"
-on: [pull_request, push]
+on: [push]
 jobs:
   krew-plugins-check:
     name: Validate PR ${{ github.event.pull_request.head.sha }}
@@ -35,7 +35,7 @@ jobs:
           "$KREW" update
         )
 
-    - name: Validate Plugin Installations
+    - name: Validate All Plugins
       shell: bash -l {0}
       run: |
         # Interactive input required. Just validate the help prompt.
