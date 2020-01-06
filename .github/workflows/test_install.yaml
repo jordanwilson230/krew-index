@@ -10,6 +10,11 @@ jobs:
       # with:
          #repository: jordanwilson230/krew-index
          #ref: ${{ GITHUB_SHA }}
+         
+    - name: Search for yaml updates
+      run: |
+        new_plugin=$(git diff master/origin --name-only | grep 'yaml')
+        [ -z "$new_plugin" ] && echo -e "\n# No new plugins were found" && exit 0
 
     - name: Setup Minikube
       id: minikube
