@@ -50,6 +50,7 @@ jobs:
     - name: Validate Plugin Installation
       shell: bash -l {0}
       run: |
+        git fetch krew/master
         new_plugin=$(git diff --name-only krew -- ./plugins | grep 'yaml')
         export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
         . ~/.bashrc
