@@ -43,7 +43,6 @@ jobs:
           KREW=./krew-"$(uname | tr '[:upper:]' '[:lower:]')_amd64" &&
           "$KREW" install --manifest=krew.yaml --archive=krew.tar.gz &&
           "$KREW" update
-          export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
           echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
         )
 
@@ -52,7 +51,7 @@ jobs:
       run: |
         git fetch krew
         new_plugin=$(git diff --name-only krew/master -- ./plugins | grep 'yaml')
-        echo 'PATH="PATH=$HOME/.krew/bin:$PATH' >> ~/.bashrc
+        echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
         . ~/.bashrc
         for plugin in $(echo ${new_plugin} | cut -d '/' -f3 | sed 's|.yaml||g' | sort); do
           echo -e "\n# Installing $plugin #"
