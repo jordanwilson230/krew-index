@@ -1,8 +1,8 @@
 name: "Test - Install Plugin"
 on:
-  #push:
-    #paths:
-    #- 'plugins/**'
+  push:
+    paths:
+    - 'plugins/**'
   pull_request:
     paths:
     - 'plugins/**'
@@ -14,12 +14,12 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v1
          
-    #- name: Search for yaml updates
-    #  run: |
-    #    git remote add krew https://github.com/kubernetes-sigs/krew-index.git
-    #    git fetch krew
-    #    new_plugin=$(git diff --name-only krew/master -- ./plugins | grep 'yaml')
-    #    [ -z "$new_plugin" ] && echo -e "\n# No new plugins were found" || echo -e "# Found new yaml file(s):\n${new_plugin}"
+    - name: Search for yaml updates
+      run: |
+        git remote add krew https://github.com/kubernetes-sigs/krew-index.git
+        git fetch krew
+        new_plugin=$(git diff --name-only krew -- ./plugins | grep 'yaml')
+        [ -z "$new_plugin" ] && echo -e "\n# No new plugins were found" || echo -e "# Found new yaml file(s):\n${new_plugin}"
 
     - name: Setup Minikube
       id: minikube
@@ -50,7 +50,7 @@ jobs:
     - name: Validate Plugin Installation
       shell: bash -l {0}
       run: |
-        new_plugin=$(git diff --name-only krew/master -- ./plugins | grep 'yaml')
+        new_plugin=$(git diff --name-only krew -- ./plugins | grep 'yaml')
         export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
         . ~/.bashrc
         for plugin in $(echo ${new_plugin} | cut -d '/' -f3 | sed 's|.yaml||g' | sort); do
