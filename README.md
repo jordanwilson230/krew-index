@@ -1,5 +1,5 @@
 # krew-index
-[![Plugins Status](https://github.com/jordanwilson230/krew-index/workflows/CI/badge.svg)](https://github.com/jordanwilson230/krew-index/workflows/Test%20-%20Regression/badge.svg)![Previous PR](https://github.com/jordanwilson230/krew-index/workflows/Test%20-%20Install%20Plugin/badge.svg)
+[![Plugins Status](https://github.com/jordanwilson230/krew-index/workflows/CI/badge.svg)](https://github.com/jordanwilson230/krew-index/workflows/Test%20-%20Regression/badge.svg)  ![Previous PR](https://github.com/jordanwilson230/krew-index/workflows/Test%20-%20Install%20Plugin/badge.svg)
 
 This is the centralized plugin index for [krew kubectl plugin manager][krew].
 
