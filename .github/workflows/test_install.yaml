@@ -48,15 +48,7 @@ jobs:
     - name: Test Plugin Installation
       shell: bash -l {0}
       run: |
-        export PATH=${KREW_ROOT:-$HOME/.krew}/bin:$PATH
-        echo $PATH
-        ls -alt ~/.*
-        echo 'export PATH=${KREW_ROOT:-$HOME/.krew}/bin:$PATH' >> ~/.bashrc
-        cat ~/.bashrc
-        . ~/.bashrc && echo $PATH
-        which kubectl
-        kubectl plugin list
-        which kubectl-krew
+        export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
         git fetch krew
         new_plugin=$(git diff --name-only origin/master -- ./plugins | grep 'yaml')
         for plugin in $(echo "$new_plugin" | cut -d '/' -f2 | sed 's|.yaml||g' | sort); do
