@@ -48,7 +48,7 @@ jobs:
     - name: Test Plugin Installation
       shell: bash -l {0}
       run: |
-        echo 'PATH="$HOME/.krew/bin:$PATH"' >> ~/.bashrc
+        echo 'export PATH=${KREW_ROOT:-$HOME/.krew}/bin:$PATH' >> ~/.bashrc
         . ~/.bashrc
         git fetch krew
         new_plugin=$(git diff --name-only krew/master -- ./plugins | grep 'yaml')
