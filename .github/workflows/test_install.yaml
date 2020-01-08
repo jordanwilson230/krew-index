@@ -1,8 +1,5 @@
 name: "Test - Install Plugin"
 on:
-  push:
-    paths:
-    - 'plugins/**'
   pull_request:
     paths:
     - 'plugins/**'
