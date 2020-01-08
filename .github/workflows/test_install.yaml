@@ -43,16 +43,15 @@ jobs:
           KREW=./krew-"$(uname | tr '[:upper:]' '[:lower:]')_amd64" &&
           "$KREW" install --manifest=krew.yaml --archive=krew.tar.gz &&
           "$KREW" update
-          echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
         )
 
-    - name: Validate Plugin Installation
+    - name: Test Plugin Installation
       shell: bash -l {0}
       run: |
+        echo 'PATH="$HOME/.krew/bin:$PATH"' >> ~/.bashrc
+        . ~/.bashrc
         git fetch krew
         new_plugin=$(git diff --name-only krew/master -- ./plugins | grep 'yaml')
-        echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
-        . ~/.bashrc
         for plugin in $(echo ${new_plugin} | cut -d '/' -f3 | sed 's|.yaml||g' | sort); do
           echo -e "\n# Installing $plugin #"
           kubectl krew install --manifest=./plugins/${plugin}.yaml
