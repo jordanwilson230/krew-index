@@ -41,8 +41,7 @@ jobs:
     - name: Validate All Plugins
       shell: bash -l {0}
       run: |
-        echo 'PATH=$PATH:~/.krew/bin' >> ~/.bashrc
-        . ~/.bashrc
+        export PATH="~/.krew/bin:$PATH"
         count=1
         plugin_count=$(ls -1 ./plugins | wc -l)
         for plugin in $(find ./plugins -name '*.yaml' | cut -d '/' -f3 | sed 's|.yaml||g' | sort); do
