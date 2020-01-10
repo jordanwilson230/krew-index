@@ -43,8 +43,8 @@ jobs:
       run: |
         export PATH="~/.krew/bin:$PATH"
         git remote add krew https://github.com/kubernetes-sigs/krew-index.git
-        git fetch
-        #new_plugin=$(git diff --name-only krew/master -- ./plugins | grep 'yaml')
+        git fetch krew
+        github checkout krew/master
         count=1
         plugin_count=$(ls -1 ./plugins | wc -l)
         for plugin in $(find ./plugins -name '*.yaml' | cut -d '/' -f3 | sed 's|.yaml||g' | sort); do
