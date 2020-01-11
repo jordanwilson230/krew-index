@@ -48,6 +48,7 @@ jobs:
       run: |
         git fetch
         git fetch krew
+        export PATH="~/.krew/bin:$PATH"
         new_plugin="$(git diff --name-only krew/master -- ./plugins | grep 'yaml')"
         for plugin in "$new_plugins"; do
           kubectl krew install --manifest=./plugins/${plugin}.yaml
