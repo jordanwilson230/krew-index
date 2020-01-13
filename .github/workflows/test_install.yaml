@@ -52,7 +52,7 @@ jobs:
         git fetch
         git fetch krew        
         new_plugin="$(git diff --name-only origin/master -- ./plugins | grep 'yaml')"
-        for plugin in "$new_plugins"; do
+        for plugin in "$new_plugin"; do
           kubectl krew install --manifest=./plugins/${plugin}.yaml
           [ $? -ne 0 ] && (printf "\n\u274c [FAIL] Error installing $plugin - exit code $?") && exit 1
           (printf "\n\u2705[OK] ${plugin} successfully installed\n-------------\n")
