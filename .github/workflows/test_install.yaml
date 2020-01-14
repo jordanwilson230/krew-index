@@ -47,11 +47,10 @@ jobs:
     - name: Test Plugin Installation
       shell: bash -l {0}
       run: |
-        ls -alt ${HOME}/.krew/bin/
         export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
         git fetch
         git fetch krew        
-        new_plugin="$(git diff --name-only origin/master -- ./plugins | grep 'yaml')"
+        new_plugin="$(git diff --name-only origin/master -- ./plugins | grep 'yaml' | cut -d '/' -f2 | sed 's|.yaml||g')"
         for plugin in "$new_plugin"; do
           kubectl krew install --manifest=./plugins/${plugin}.yaml
           [ $? -ne 0 ] && (printf "\n\u274c [FAIL] Error installing $plugin - exit code $?") && exit 1
