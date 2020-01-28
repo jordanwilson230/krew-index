@@ -41,7 +41,7 @@ jobs:
     - name: Validate All Plugins
       shell: bash -l {0}
       run: |
-        export PATH="~/.krew/bin:$PATH"
+        export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
         git remote add krew https://github.com/kubernetes-sigs/krew-index.git
         git fetch krew
         github checkout krew/master
