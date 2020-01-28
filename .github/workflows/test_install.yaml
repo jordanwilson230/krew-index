@@ -49,10 +49,12 @@ jobs:
       run: |
         export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
         git fetch
-        git fetch krew        
-        new_plugin="$(git diff --name-only origin/master -- ./plugins | grep 'yaml' | cut -d '/' -f2 | sed 's|.yaml||g')"
+        git fetch krew
+        set -x
+        new_plugin=($(git diff --name-only origin/master -- ./plugins | grep 'yaml' | cut -d '/' -f2 | sed 's|.yaml||g'))
         for plugin in "$new_plugin"; do
-          kubectl krew install --manifest=./plugins/${plugin}.yaml
+          echo Running kubectl krew install --manifest="./plugins/${plugin}.yaml"
+          kubectl krew install --manifest="./plugins/${plugin}.yaml"
           [ $? -ne 0 ] && (printf "\n\u274c [FAIL] Error installing $plugin - exit code $?") && test_result='fail'
           (printf "\n\u2705[OK] ${plugin} successfully installed\n-------------\n")
         done
